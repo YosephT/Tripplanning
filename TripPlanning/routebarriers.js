@@ -2,7 +2,7 @@ var map, iw, task;
 gmaps.ags.Config.proxyUrl = '/proxy/proxy.ashx';
 var stops = [];
 var barriers = [];
-var routes = [];
+var routes = []; 
 function init() {
   var myOptions = {
     zoom: 12,
