@@ -2,11 +2,11 @@ var map, iw, task;
 gmaps.ags.Config.proxyUrl = '/proxy/proxy.ashx';
 var stops = [];
 var barriers = [];
-var routes = [];
+var routes = []; 
 function init() {
   var myOptions = {
     zoom: 12,
-    center: new google.maps.LatLng(35.23, -80.84),//37.8, -122.41
+    center: new google.maps.LatLng(42.3601, -71.0589),//Boston
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP]
@@ -15,9 +15,8 @@ function init() {
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   task = new gmaps.ags.RouteTask('http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route');
-  //'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Route');
   google.maps.event.addListener(map, 'click', addPoint);
-  
+  addBarrier();
   showHelp();
 }
 
@@ -38,7 +37,7 @@ function addPoint(evt) {
   if (isStop) {
     icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + (stops.length + 1) + "|00ff00|000000");
   } else {
-    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FF0000,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));
+    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FFFF00,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));  //yellow for temp barriers (for the user to add)
   }
   var marker = new google.maps.Marker({
     position: evt.latLng,
@@ -61,7 +60,41 @@ function addPoint(evt) {
   
 }
 
-function route() {
+function addBarrier() {
+  if (iw) {
+    iw.close();
+    iw = null;
+  }
+  var isStop = getPointType() == 0;
+  var arr = isStop ? stops : barriers;
+  var icon;
+  if (isStop) {
+    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + (stops.length + 1) + "|00ff00|000000");
+  } else {
+    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FF0000,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));
+  }
+   var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(42.35220119847454, -71.04626655578613), //evt.latLng,
+    map: map,
+    icon: icon,
+    draggable: true
+  });
+  
+//  arr.push(marker);
+//  google.maps.event.addListener(marker, 'click', function() {
+//    marker.setMap(null);
+//    for (var i = 0, I = arr.length; i < I; i++) {
+//      if (arr[i] == marker) {//marker.container_
+//        arr.splice(i, 1);
+//        break;
+//      }
+//    }
+//    marker = null;
+//  });
+  
+}
+
+function route() { //want to use this (see html) just once, not when clicking on "route"
   gmaps.ags.Util.removeFromMap(routes);
   routes = [];
   showBusy(true);
@@ -126,4 +159,3 @@ window.onload = init;
 window['route'] = route;
 window['clearOverlays'] = clearOverlays;
 window['showHelp'] = showHelp;
-
