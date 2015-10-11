@@ -37,7 +37,7 @@ function addPoint(evt) {
   if (isStop) {
     icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + (stops.length + 1) + "|00ff00|000000");
   } else {
-    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FF0000,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));
+    icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FFFF00,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));  //yellow for temp barriers (for the user to add)
   }
   var marker = new google.maps.Marker({
     position: evt.latLng,
@@ -80,17 +80,17 @@ function addBarrier() {
     draggable: true
   });
   
-  arr.push(marker);
-  google.maps.event.addListener(marker, 'click', function() {
-    marker.setMap(null);
-    for (var i = 0, I = arr.length; i < I; i++) {
-      if (arr[i] == marker) {//marker.container_
-        arr.splice(i, 1);
-        break;
-      }
-    }
-    marker = null;
-  });
+//  arr.push(marker);
+//  google.maps.event.addListener(marker, 'click', function() {
+//    marker.setMap(null);
+//    for (var i = 0, I = arr.length; i < I; i++) {
+//      if (arr[i] == marker) {//marker.container_
+//        arr.splice(i, 1);
+//        break;
+//      }
+//    }
+//    marker = null;
+//  });
   
 }
 
