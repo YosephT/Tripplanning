@@ -16,7 +16,7 @@ function init() {
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   task = new gmaps.ags.RouteTask('http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route');
   google.maps.event.addListener(map, 'click', addPoint);
-  //here will be the barrier list - for each barrier, call addBarrier() <-- add parameter to take in coordinates
+  //here will be the barrier list - for each barrier, call addBarrier()
   addBarrier(42.363208, -71.059574);
   addBarrier(42.363187, -71.059617);
   
@@ -81,20 +81,7 @@ function addBarrier(x, y) {
     map: map,
     icon: icon,
     draggable: false
-  });
-  
-//  arr.push(marker);
-//  google.maps.event.addListener(marker, 'click', function() {
-//    marker.setMap(null);
-//    for (var i = 0, I = arr.length; i < I; i++) {
-//      if (arr[i] == marker) {//marker.container_
-//        arr.splice(i, 1);
-//        break;
-//      }
-//    }
-//    marker = null;
-//  });
-  
+  }); 
 }
 
 function route() { //want to use this (see html) just once, not when clicking on "route"
