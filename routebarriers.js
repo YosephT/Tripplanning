@@ -80,7 +80,7 @@ function addBarrier(x, y) {
     position: new google.maps.LatLng(x, y), //evt.latLng,
     map: map,
     icon: icon,
-    draggable: true
+    draggable: false
   });
   
 //  arr.push(marker);
