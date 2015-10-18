@@ -16,7 +16,10 @@ function init() {
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   task = new gmaps.ags.RouteTask('http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route');
   google.maps.event.addListener(map, 'click', addPoint);
-  addBarrier();
+  //here will be the barrier list - for each barrier, call addBarrier() <-- add parameter to take in coordinates
+  addBarrier(42.363208, -71.059574);
+  addBarrier(42.363187, -71.059617);
+  
   showHelp();
 }
 
@@ -60,7 +63,7 @@ function addPoint(evt) {
   
 }
 
-function addBarrier() {
+function addBarrier(x, y) {
   if (iw) {
     iw.close();
     iw = null;
@@ -74,7 +77,7 @@ function addBarrier() {
     icon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?cht=itr&chs=24x24&chco=FF0000,000000ff,ffffff01&chl=x&chx=000000,0&chf=bg,s,00000000&ext=.png", null, null, new google.maps.Point(12, 12));
   }
    var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(42.35220119847454, -71.04626655578613), //evt.latLng,
+    position: new google.maps.LatLng(x, y), //evt.latLng,
     map: map,
     icon: icon,
     draggable: true
